@@ -37,7 +37,8 @@
                     <?php echo $row->alamat; ?>
                 </td>
                 <td>
-                    <a href="<?= base_url('index.php/mahasiswa/hapus/' . $row->nim); ?>">hapus</a>
+                    <a href="<?= base_url('index.php/mahasiswa/hapus/' . $row->nim); ?>">Hapus</a>
+                    <a href="<?= base_url('index.php/mahasiswa/edit/' . $row->nim); ?>">Edit</a>
                 </td>
             </tr>
         <?php endforeach; ?>
