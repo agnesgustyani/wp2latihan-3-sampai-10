@@ -5,15 +5,25 @@ class mahasiswa extends CI_Controller
     {
         parent::__construct();
         $this->load->model('m_mahasiswa');
+        $this->load->library(array('template', 'pagination', 'form_validation'));
     }
     function index()
     {
         $data['mahasiswa'] = $this->m_mahasiswa->tampilData()->result();
-        $this->load->view('mahasiswa', $data);
+        // $this->load->view('mahasiswa', $data);
+        $this->template->display('mahasiswa/index', $data);
     }
 
-    function hapus($nim)
+    // function hapus($nim)
+    // {
+    //     $this->m_mahasiswa->hapus($nim);
+
+    //     $data['mahasiswa'] = $this->m_mahasiswa->tampilData()->result();
+    //     $this->load->view('mahasiswa', $data);
+    // }
+    function hapus()
     {
+        $nim = $this->input->post('kode');
         $this->m_mahasiswa->hapus($nim);
 
         $data['mahasiswa'] = $this->m_mahasiswa->tampilData()->result();
@@ -32,12 +42,25 @@ class mahasiswa extends CI_Controller
         $this->m_mahasiswa->simpanData($data);
         redirect("mahasiswa/index");
     }
+    function tambah()
+    {
+        $this->template->display('mahasiswa/tambah');
+    }
+    // function edit($nim)
+    // {
+    //     $where = array('nim' => $nim);
+    //     $data['mahasiswa'] = $this->m_mahasiswa->edit_data($where, 'mahasiswa')->result();
+    //     $this->load->view('edit_mahasiswa', $data);
+    // }
     function edit($nim)
     {
         $where = array('nim' => $nim);
-        $data['mahasiswa'] = $this->m_mahasiswa->edit_data($where, 'mahasiswa')->result();
-        $this->load->view('edit_mahasiswa', $data);
+        $data['mhs'] = $this->m_mahasiswa->edit_data($where, 'mahasiswa')->row_array();
+        // var_dump($data);
+        // exit();
+        $this->template->display('mahasiswa/edit', $data);
     }
+    
     function update()
     {
         $nim = $this->input->post('nim');
